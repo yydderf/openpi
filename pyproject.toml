@@ -26,7 +26,11 @@ dependencies = [
     "orbax-checkpoint==0.11.13",
     "pillow>=11.0.0",
     "sentencepiece>=0.2.0",
-    "torch==2.7.1",
+    "torch==2.9.1",
+    # Pulled in by lerobot; listed directly so its uv source below applies (must match torch's CUDA build).
+    # The cu130 index tags only the x86_64 wheel with "+cu130"; its aarch64 wheel is a plain "0.24.1".
+    "torchvision==0.24.1+cu130; sys_platform == 'linux' and platform_machine == 'x86_64'",
+    "torchvision==0.24.1; sys_platform != 'linux' or platform_machine != 'x86_64'",
     "tqdm-loggable>=0.2",
     "typing-extensions>=4.12.2",
     "tyro>=0.9.5",
@@ -61,6 +65,9 @@ rlds = [
     "tensorflow-cpu==2.15.0",
     "tensorflow-datasets==4.9.9",
 ]
+profiling = [
+    "nvtx>=0.2",
+]
 
 [tool.uv]
 override-dependencies = ["ml-dtypes==0.4.1", "tensorstore==0.1.74"]
@@ -69,6 +76,15 @@ override-dependencies = ["ml-dtypes==0.4.1", "tensorstore==0.1.74"]
 openpi-client = { workspace = true }
 lerobot = { git = "https://github.com/huggingface/lerobot", rev = "0cf864870cf29f4738d3ade893e6fd13fbd7cdb5" }
 dlimp = { git = "https://github.com/kvablack/dlimp", rev = "ad72ce3a9b414db2185bc0b38461d4101a65477a" }
+# Same CUDA 13 build on the x86 workstation and Jetson Orin (JetPack 7), so profiles differ only by hardware.
+# The cu130 aarch64 wheel ships sm_80 cubins, which run on Orin's sm_87. Needs a host driver >= r580.
+torch = { index = "pytorch-cu130", marker = "sys_platform == 'linux'" }
+torchvision = { index = "pytorch-cu130", marker = "sys_platform == 'linux'" }
+
+[[tool.uv.index]]
+name = "pytorch-cu130"
+url = "https://download.pytorch.org/whl/cu130"
+explicit = true
 
 [tool.uv.workspace]
 members = ["packages/*"]

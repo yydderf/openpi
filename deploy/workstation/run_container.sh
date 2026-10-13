@@ -5,7 +5,7 @@
 
 REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 NSYS_ROOT=/opt/nvidia/nsight-systems/2026.4.1
-OPENPI_DATA_HOME="${OPENPI_DATA_HOME:-$HOME/.cache/openpi}"
+OPENPI_DATA_HOME="${OPENPI_DATA_HOME:-/srv/models/openpi}"
 mkdir -p "$OPENPI_DATA_HOME"
 
 docker run -it --rm --init \

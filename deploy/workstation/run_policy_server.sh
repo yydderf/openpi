@@ -19,7 +19,7 @@ POLICY=${policy}-droid DATETIME=$(date +"%Y%m%d_%H%M") \
     --gpu-metrics-frequency=10000 \
     --cuda-memory-usage=true \
     --cuda-graph-trace=node \
-    --capture-range=cudaProfilerApi --capture-range-end=repeat:2 \
+    --capture-range=nvtx --nvtx-capture=openpi.capture --capture-range-end=repeat:2 \
     --sample=process-tree --cpuctxsw=process-tree \
     uv run scripts/serve_policy.py policy:checkpoint \
         --policy.config=$name \
