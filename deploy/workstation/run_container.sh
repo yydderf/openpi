@@ -5,6 +5,7 @@
 
 REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 NSYS_ROOT=/opt/nvidia/nsight-systems/2026.4.1
+NCU_ROOT=/opt/nvidia/NVIDIA-Nsight-Compute-2026.3
 OPENPI_DATA_HOME="${OPENPI_DATA_HOME:-/srv/models/openpi}"
 mkdir -p "$OPENPI_DATA_HOME"
 
@@ -18,7 +19,9 @@ docker run -it --rm --init \
     -e OPENPI_DATA_HOME=/openpi_assets \
     -e IS_DOCKER=true \
     -e NSYS_ROOT=$NSYS_ROOT \
+    -e NCU_ROOT=$NCU_ROOT \
     -v $NSYS_ROOT:$NSYS_ROOT:ro \
+    -v $NCU_ROOT:$NCU_ROOT:ro \
     -v "$REPO_ROOT:/app" \
     -v "$OPENPI_DATA_HOME:/openpi_assets" \
     -v "/srv/models/huggingface:/root/.cache/huggingface" \

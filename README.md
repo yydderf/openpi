@@ -222,6 +222,15 @@ uv run examples/convert_jax_model_to_pytorch.py \
     --output_path /path/to/converted/pytorch/checkpoint
 ```
 
+```bash
+uv run examples/convert_jax_model_to_pytorch.py \
+    --checkpoint_dir /openpi_assets/openpi-assets/checkpoints/polaris/pi05_droid_jointpos_polaris \
+    --config_name pi05_droid_jointpos_polaris \
+    --output_path /openpi_assets/openpi-assets/checkpoints/polaris/pi05_droid_jointpos_polaris_pytorch
+cp -r /openpi_assets/openpi-assets/checkpoints/polaris/pi05_droid_jointpos_polaris/assets \
+      /openpi_assets/openpi-assets/checkpoints/polaris/pi05_droid_jointpos_polaris_pytorch/
+```
+
 ### Running Inference with PyTorch
 
 The PyTorch implementation uses the same API as the JAX version - you only need to change the checkpoint path to point to the converted PyTorch model:
